@@ -2,3 +2,7 @@
 
 
 [Нормализация](https://disk.yandex.ru/i/g_i1TFFM65shcA)
+
+
+
+[Импорт](https://disk.yandex.ru/i/dKFbDyMuyG_n1Q)
