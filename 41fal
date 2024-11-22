@@ -1,0 +1,171 @@
+1)SELECT * FROM books ORDER BY book_id asc;
+
+2)SELECT book_id AS Code_book, name_book AS Title_book, number_of_pages AS Pages
+FROM books
+ORDER BY Title_book ASC, Pages DESC;
+
+3)SELECT name_delivery, number_of_instances AS Phone, inn
+FROM delivery1
+ORDER BY inn DESC;
+
+4)SELECT name_delivery, inn, number_of_instances AS Phone, address, Delivery_id AS Code_delivery
+FROM delivery1;
+
+5)SELECT name_izdatelstvo AS Publish, City, izdatelstvo_id AS Code_publish
+FROM izdatelstvo;
+
+6)SELECT books.name_book AS Title_book, books.number_of_pages AS Pages, author.name_author AS Name_author
+FROM books, author
+WHERE books.auntor_id = author.author_id;
+
+7)SELECT books.name_book AS Title_book, books.number_of_pages AS Pages, delivery1.name_delivery AS Name_delivery
+FROM books, delivery1
+WHERE books.book_id = delivery1.Delivery_id;
+
+
+8)SELECT books.name_book AS Title_book, books.number_of_pages AS Pages, izdatelstvo.name_izdatelstvo AS Publish, izdatelstvo.City AS City
+FROM books, izdatelstvo
+WHERE books.izdatelstvo_id = izdatelstvo.izdatelstvo_id;
+
+9)SELECT name_company, number_of_instances AS Phone, inn
+FROM delivery1
+WHERE name_company LIKE 'ОАО%';
+
+
+10)SELECT books.name_book AS Title_book, books.number_of_pages AS Pages, author.name_author AS Name_author
+FROM books, author
+WHERE books.auntor_id = author.author_id AND books.name_book LIKE 'Мемуары%';
+
+
+11)SELECT name_author
+FROM author
+WHERE name_author LIKE 'Иванов%';
+
+12)SELECT name_izdatelstvo
+FROM izdatelstvo
+WHERE City <> 'Москва';
+
+13)SELECT books.name_book AS Title_book
+FROM books, izdatelstvo
+WHERE books.izdatelstvo_id = izdatelstvo.izdatelstvo_id AND izdatelstvo.name_izdatelstvo <> 'Питер-Софт';
+
+14)SELECT name_author
+FROM author
+WHERE birthday BETWEEN '1840-01-01' AND '1860-06-01';
+
+15)SELECT books.name_book AS Title_book, pokupki.product_unit_cost AS Amount
+FROM books, pokupki
+WHERE books.book_id = pokupki.book_id AND pokupki.product_unit_cost BETWEEN '2003-03-12' AND '2003-06-15';
+
+16)SELECT name_book AS Title_book, number_of_pages AS Pages
+FROM books
+WHERE number_of_pages BETWEEN 200 AND 300;
+
+17)SELECT name_author
+FROM author
+WHERE name_author LIKE 'В%' OR name_author LIKE 'Г%';
+
+18)SELECT books.name_book AS Title_book, pokupki.product_unit_cost AS Amount
+FROM books, pokupki
+WHERE books.book_id = pokupki.book_id AND pokupki.provider_id IN (3, 7, 9, 11);
+
+19)SELECT books.name_book AS Title_book
+FROM books, izdatelstvo
+WHERE books.izdatelstvo_id = izdatelstvo.izdatelstvo_id AND izdatelstvo.name_izdatelstvo IN ('Питер-Софт', 'Альфа', 'Наука');
+
+20)SELECT books.name_book AS Title_book
+FROM books, author
+WHERE books.auntor_id = author.author_id AND author.name_author IN ('Толстой Л.Н.', 'Достоевский Ф.М.', 'Пушкин А.С.');
+
+
+21)SELECT name_author
+FROM author
+WHERE name_author LIKE 'К%';
+
+22)SELECT name_izdatelstvo AS Publish
+FROM izdatelstvo
+WHERE name_izdatelstvo LIKE '%софт%';
+
+23)SELECT name_company
+FROM delivery1
+WHERE name_company LIKE '%ский';
+
+
+24)SELECT pokupki.provider_id AS Code_delivery, pokupki.date_zakup AS Date_order, books.name_book AS Title_book
+FROM pokupki, books
+WHERE pokupki.book_id = books.book_id AND (pokupki.number_of_instances > 100 OR pokupki.product_unit_cost BETWEEN 200 AND 500);
+
+25)SELECT author.autor_id AS Code_author, author.name_author, books.name_book AS Title_book
+FROM author, books, izdatelstvo
+WHERE author.autor_id = books.auntor_id AND books.izdatelstvo_id = izdatelstvo.izdatelstvo_id AND izdatelstvo.izdatelstvo_id BETWEEN 10 AND 25 AND books.number_of_pages > 120;
+
+
+26)SELECT izdatelstvo.name_izdatelstvo AS Publish
+FROM izdatelstvo, books
+WHERE izdatelstvo.izdatelstvo_id = books.izdatelstvo_id AND books.name_book LIKE 'Труды%' AND izdatelstvo.City = 'Новосибирск';
+
+27)SELECT delivery1.name_company, books.name_book AS Title_book
+FROM delivery1, pokupki, books
+WHERE delivery1.Delivery_id = pokupki.provider_id AND pokupki.book_id = books.book_id AND pokupki.date_zakup BETWEEN '2002-01-01' AND '2003-12-31';
+
+28)SELECT author.name_author
+FROM author, books, izdatelstvo
+WHERE author.author_id = books.auntor_id AND books.izdatelstvo_id = izdatelstvo.izdatelstvo_id AND izdatelstvo.name_izdatelstvo = 'Мир';
+
+
+29)SELECT delivery1.name_company
+FROM delivery1, pokupki, books, izdatelstvo
+WHERE delivery1.Delivery_id = pokupki.provider_id AND pokupki.book_id = books.book_id AND books.izdatelstvo_id = izdatelstvo.izdatelstvo_id AND izdatelstvo.name_izdatelstvo = 'Питер';
+
+30)SELECT author.name_author, books.name_book AS Title_book
+FROM author, books, pokupki, delivery1
+WHERE author.author_id = books.auntor_id AND books.book_id = pokupki.book_id AND pokupki.provider_id = delivery1.Delivery_id AND delivery1.name_company = 'ОАО Книготорг';
+
+31)SELECT books.name_book AS Title_book, SUM(pokupki.number_of_instances * pokupki.product_unit_cost) AS Total_Cost
+FROM books, pokupki
+WHERE books.book_id = pokupki.book_id
+GROUP BY books.name_book;
+
+32)SELECT books.name_book AS Title_book, (pokupki.product_unit_cost / books.number_of_pages) AS Cost_Per_Page
+FROM books, pokupki
+WHERE books.book_id = pokupki.book_id;
+
+33)SELECT name_author, EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM birthday) AS Age
+FROM author;
+
+34)SELECT SUM(pokupki.product_unit_cost * pokupki.number_of_instances) AS Total_Cost
+FROM pokupki, delivery1
+WHERE pokupki.provider_id = delivery1.Delivery_id AND delivery1.name_company = 'ЗАО Оптторг';
+
+35)SELECT COUNT(*) AS Total_Purchases
+FROM pokupki
+WHERE pokupki.date_zakup BETWEEN '2003-01-01' AND '2003-02-01';
+
+36)SELECT AVG(pokupki.product_unit_cost) AS Avg_Cost, AVG(pokupki.number_of_instances) AS Avg_Amount
+FROM pokupki, books, author
+WHERE pokupki.book_id = books.book_id AND books.auntor_id = author.autor_id AND author.name_author = 'Акунин';
+
+37)SELECT pokupki.*, books.name_book AS Title_book
+FROM pokupki, books
+WHERE pokupki.book_id = books.book_id
+ORDER BY (pokupki.product_unit_cost * pokupki.number_of_instances) ASC
+LIMIT 1;
+
+38)SELECT pokupki.*, books.name_book AS Title_book
+FROM pokupki, books
+WHERE pokupki.book_id = books.book_id
+ORDER BY (pokupki.product_unit_cost * pokupki.number_of_instances) DESC
+LIMIT 1;
+
+39)SELECT books.name_book AS Title_book, SUM(pokupki.number_of_instances * pokupki.product_unit_cost) AS Itogo
+FROM books, pokupki
+WHERE books.book_id = pokupki.book_id AND pokupki.date_zakup BETWEEN '2002-01-01' AND '2002-06-01'
+GROUP BY books.name_book;
+
+40)SELECT books.name_book AS Title_book, (pokupki.product_unit_cost / books.number_of_pages) AS One_page
+FROM books, pokupki
+WHERE books.book_id = pokupki.book_id;
+
+41)SELECT SUM(pokupki.product_unit_cost * pokupki.number_of_instances) AS Sum_cost
+FROM pokupki, delivery1
+WHERE pokupki.provider_id = delivery1.Delivery_id AND delivery1.name_company = 'ОАО Луч';
