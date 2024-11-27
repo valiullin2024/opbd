@@ -10,3 +10,6 @@
 
 
 [41 запрос](https://disk.yandex.ru/d/3TjjTRkqfVBUVQ)
+
+
+[Детали](https://disk.yandex.ru/d/o33HC9Y1yVEhqA)
